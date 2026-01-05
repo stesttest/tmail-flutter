@@ -175,6 +175,7 @@ import 'package:tmail_ui_user/features/push_notification/presentation/controller
 import 'package:tmail_ui_user/features/push_notification/presentation/notification/local_notification_manager.dart';
 import 'package:tmail_ui_user/features/push_notification/presentation/services/fcm_service.dart';
 import 'package:tmail_ui_user/features/push_notification/presentation/utils/fcm_utils.dart';
+import 'package:tmail_ui_user/features/search/email/presentation/mixin/search_label_filter_modal_mixin.dart';
 import 'package:tmail_ui_user/features/sending_queue/domain/model/sending_email.dart';
 import 'package:tmail_ui_user/features/sending_queue/domain/state/get_all_sending_email_state.dart';
 import 'package:tmail_ui_user/features/sending_queue/domain/state/update_sending_email_state.dart';
@@ -224,7 +225,8 @@ class MailboxDashBoardController extends ReloadableController
     with ContactSupportMixin,
         OwnEmailAddressMixin,
         SaaSPremiumMixin,
-        AiScribeMixin {
+        AiScribeMixin,
+        SearchLabelFilterModalMixin {
 
   final RemoveEmailDraftsInteractor _removeEmailDraftsInteractor = Get.find<RemoveEmailDraftsInteractor>();
   final EmailReceiveManager _emailReceiveManager = Get.find<EmailReceiveManager>();
@@ -2344,6 +2346,9 @@ class MailboxDashBoardController extends ReloadableController
         break;
       case QuickSearchFilter.unread:
         deleteUnreadSearchFilter();
+        break;
+      case QuickSearchFilter.labels:
+        deleteQuickSearchFilter(filter: searchFilter);
         break;
       default:
         break;
