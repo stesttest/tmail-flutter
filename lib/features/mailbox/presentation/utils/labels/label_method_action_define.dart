@@ -11,3 +11,5 @@ typedef OnLabelActionTypeCallback = void Function(
   Label label,
   LabelActionType actionType,
 );
+
+typedef OnLongPressLabelItemAction = void Function(Label label);
