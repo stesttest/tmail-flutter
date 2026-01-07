@@ -26,4 +26,7 @@ class PopupMenuItemLabelAction
 
   @override
   Color get actionNameColor => action.getPopupMenuTitleColor();
+
+  @override
+  String get hoverIcon => imagePaths.icThumbsUp;
 }

@@ -1,7 +1,5 @@
 import 'package:core/utils/app_logger.dart';
-import 'package:core/utils/platform_info.dart';
 import 'package:dartz/dartz.dart';
-import 'package:get/get.dart';
 import 'package:jmap_dart_client/jmap/account_id.dart';
 import 'package:labels/extensions/list_label_extension.dart';
 import 'package:labels/model/label.dart';
@@ -12,6 +10,7 @@ import 'package:tmail_ui_user/features/labels/presentation/label_controller.dart
 import 'package:tmail_ui_user/features/labels/presentation/models/label_action_type.dart';
 import 'package:tmail_ui_user/features/labels/presentation/widgets/create_new_label_modal.dart';
 import 'package:tmail_ui_user/main/exceptions/logic_exception.dart';
+import 'package:tmail_ui_user/main/routes/dialog_router.dart';
 
 extension HandleLabelActionTypeExtension on LabelController {
   void handleLabelActionType({
@@ -34,14 +33,15 @@ extension HandleLabelActionTypeExtension on LabelController {
     required AccountId? accountId,
     required Label label,
   }) async {
-    if (PlatformInfo.isWeb) {
-      isCreateNewLabelModalVisible.value = true;
+    if (accountId == null) {
+      consumeState(
+        Stream.value(Left(EditLabelFailure(NotFoundAccountIdException()))),
+      );
+      return;
     }
 
-    await Get.generalDialog(
-      barrierDismissible: true,
-      barrierLabel: 'edit-label-modal',
-      pageBuilder: (_, __, ___) => CreateNewLabelModal(
+    await DialogRouter().openDialogModal(
+      child: CreateNewLabelModal(
         labels: labels,
         selectedLabel: label,
         actionType: LabelActionType.edit,
@@ -52,11 +52,8 @@ extension HandleLabelActionTypeExtension on LabelController {
             newLabel: newLabel,
           ),
       ),
-    ).whenComplete(() {
-      if (PlatformInfo.isWeb) {
-        isCreateNewLabelModalVisible.value = false;
-      }
-    });
+      dialogLabel: 'edit-label-modal',
+    );
   }
 
   void editLabel({
