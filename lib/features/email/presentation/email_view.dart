@@ -41,7 +41,7 @@ import 'package:tmail_ui_user/features/email/presentation/widgets/information_se
 import 'package:tmail_ui_user/features/email/presentation/widgets/mail_unsubscribed_banner.dart';
 import 'package:tmail_ui_user/features/email/presentation/widgets/view_entire_message_with_message_clipped_widget.dart';
 import 'package:tmail_ui_user/features/mailbox_dashboard/presentation/extensions/handle_open_context_menu_extension.dart';
-import 'package:tmail_ui_user/features/mailbox_dashboard/presentation/extensions/labels/handle_logic_label_extension.dart';
+import 'package:tmail_ui_user/features/mailbox_dashboard/presentation/extensions/labels/check_label_available_extension.dart';
 import 'package:tmail_ui_user/features/mailbox_dashboard/presentation/extensions/verify_display_overlay_view_on_iframe_extension.dart';
 import 'package:tmail_ui_user/features/manage_account/presentation/extensions/vacation_response_extension.dart';
 import 'package:tmail_ui_user/features/manage_account/presentation/vacation/widgets/vacation_notification_message_widget.dart';
@@ -104,7 +104,7 @@ class EmailView extends GetWidget<SingleEmailController> {
                         handleEmailAction: controller.handleEmailAction,
                         additionalActions: [],
                         emailIsRead: presentationEmail.hasRead,
-                        isLabelFeatureEnabled: controller.isLabelFeatureEnabled,
+                        isLabelFeatureEnabled: controller.isLabelAvailable,
                         labels: controller.mailboxDashBoardController.labelController.labels,
                         openBottomSheetContextMenu: controller.mailboxDashBoardController.openBottomSheetContextMenu,
                         openPopupMenu: controller.mailboxDashBoardController.openPopupMenuActionGroup,
@@ -262,15 +262,13 @@ class EmailView extends GetWidget<SingleEmailController> {
             final isLabelAvailable = controller
                 .mailboxDashBoardController.isLabelAvailable;
 
-            final labelController =
-                controller.mailboxDashBoardController.labelController;
+            final listLabels =
+                controller.mailboxDashBoardController.labelController.labels;
 
             List<Label>? emailLabels;
 
             if (isLabelAvailable) {
-              emailLabels = presentationEmail.getLabelList(
-                labelController.labels,
-              );
+              emailLabels = presentationEmail.getLabelList(listLabels);
             }
 
             return EmailSubjectWidget(
@@ -314,7 +312,7 @@ class EmailView extends GetWidget<SingleEmailController> {
               EmailActionType.deletePermanently,
             ],
             emailIsRead: presentationEmail.hasRead,
-            isLabelFeatureEnabled: controller.isLabelFeatureEnabled,
+            isLabelFeatureEnabled: controller.isLabelAvailable,
             labels: controller.mailboxDashBoardController.labelController.labels,
             openBottomSheetContextMenu: controller.mailboxDashBoardController.openBottomSheetContextMenu,
             openPopupMenu: controller.mailboxDashBoardController.openPopupMenuActionGroup,
