@@ -5624,4 +5624,19 @@ class AppLocalizations {
     );
   }
 
+  String removeLabelFromEmailSuccessfullyMessage(String labelName) {
+    return Intl.message(
+      'Email removed from the "$labelName" label',
+      name: 'removeLabelFromEmailSuccessfullyMessage',
+      args: [labelName],
+    );
+  }
+
+  String removeLabelFromEmailFailureMessage(String labelName) {
+    return Intl.message(
+      'Cannot remove email from the "$labelName" label',
+      name: 'removeLabelFromEmailFailureMessage',
+      args: [labelName],
+    );
+  }
 }
