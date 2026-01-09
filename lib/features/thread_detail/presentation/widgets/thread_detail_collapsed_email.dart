@@ -45,7 +45,7 @@ class ThreadDetailCollapsedEmail extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isMobileResponsive = responsiveUtils.isMobile(context);
-
+    print('>> dab >> ThreadDetailCollapsedEmail: showSubject = $showSubject, labels = $labels');
     return DecoratedBox(
       decoration: const BoxDecoration(
         color: Colors.white,
@@ -64,7 +64,7 @@ class ThreadDetailCollapsedEmail extends StatelessWidget {
           children: [
             if (showSubject)
               EmailSubjectWidget(
-                presentationEmail: presentationEmail,
+                emailSubject: presentationEmail.getEmailTitle(),
                 imagePaths: imagePaths,
                 isMobileResponsive: isMobileResponsive,
                 labels: labels,
