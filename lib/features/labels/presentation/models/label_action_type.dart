@@ -13,20 +13,6 @@ enum LabelActionType {
     }
   }
 
-  String getModalTitle(AppLocalizations appLocalizations) {
-    switch (this) {
-      case LabelActionType.delete:
-        return appLocalizations.deleteLabel;
-    }
-  }
-
-  String getModalSubTitle(AppLocalizations appLocalizations, String labelName) {
-    switch (this) {
-      case LabelActionType.delete:
-        return appLocalizations.areYouSureYouWantToDeleteTheLabel(labelName);
-    }
-  }
-
   String getContextMenuIcon(ImagePaths imagePaths) {
     switch (this) {
       case LabelActionType.delete:
