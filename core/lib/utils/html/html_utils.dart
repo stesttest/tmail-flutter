@@ -213,6 +213,41 @@ class HtmlUtils {
       })();''',
     name: 'deleteSelectionContent');
 
+  static const saveSelection = (
+    script: '''
+      (() => {
+        const selection = window.getSelection();
+        if (selection && selection.rangeCount > 0) {
+          window._savedRange = selection.getRangeAt(0).cloneRange();
+          console.log("savedRange", window._savedRange);
+          return true;
+        }
+        return false;
+      })();''',
+    name: 'saveSelection');
+
+  static const restoreSelection = (
+    script: '''
+      (() => {
+        if (window._savedRange) {
+          const selection = window.getSelection();
+          if (selection) {
+            selection.removeAllRanges();
+            selection.addRange(window._savedRange);
+            return true;
+          }
+        }
+        return false;
+      })();''',
+    name: 'restoreSelection');
+
+  static const clearSavedSelection = (
+    script: '''
+      (() => {
+        delete window._savedRange;
+      })();''',
+    name: 'clearSavedSelection');
+
   static recalculateEditorHeight({double? maxHeight}) => (
     script: '''
       const editable = document.querySelector('.note-editable');
