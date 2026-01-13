@@ -370,6 +370,10 @@ flutter:
       fonts:
         - asset: assets/fonts/fallback/Roboto-Regular.ttf
 
+    - family: NotoSansTC
+      fonts:
+        - asset: assets/fonts/fallback/NotoSansTC.ttf
+        
     - family: NotoSans
       fonts:
         - asset: assets/fonts/fallback/NotoSans-Regular.ttf
